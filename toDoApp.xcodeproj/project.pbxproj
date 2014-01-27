@@ -31,6 +31,8 @@
 		91AAB3F718965B360047C560 /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91AAB3F618965B360047C560 /* Security.framework */; };
 		91AAB3F918965B3E0047C560 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91AAB3F818965B3E0047C560 /* StoreKit.framework */; };
 		91AAB3FB18965B450047C560 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 91AAB3FA18965B450047C560 /* SystemConfiguration.framework */; };
+		91AAB402189662100047C560 /* Element.m in Sources */ = {isa = PBXBuildFile; fileRef = 91AAB401189662100047C560 /* Element.m */; };
+		91AAB405189665190047C560 /* ManagedLesson.m in Sources */ = {isa = PBXBuildFile; fileRef = 91AAB404189665190047C560 /* ManagedLesson.m */; };
 		F0051E637D45416F918BC702 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76B9CEDC5D7846F784FF893F /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -74,6 +76,10 @@
 		91AAB3F618965B360047C560 /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
 		91AAB3F818965B3E0047C560 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		91AAB3FA18965B450047C560 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		91AAB400189662100047C560 /* Element.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Element.h; sourceTree = "<group>"; };
+		91AAB401189662100047C560 /* Element.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Element.m; sourceTree = "<group>"; };
+		91AAB403189665190047C560 /* ManagedLesson.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ManagedLesson.h; sourceTree = "<group>"; };
+		91AAB404189665190047C560 /* ManagedLesson.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ManagedLesson.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -157,8 +163,7 @@
 		91AAB3BD189657BF0047C560 /* toDoApp */ = {
 			isa = PBXGroup;
 			children = (
-				91AAB3C6189657BF0047C560 /* AppDelegate.h */,
-				91AAB3C7189657BF0047C560 /* AppDelegate.m */,
+				91AAB3FF1896618B0047C560 /* Model */,
 				91AAB3CC189657BF0047C560 /* Images.xcassets */,
 				91AAB3C9189657BF0047C560 /* toDoApp.xcdatamodeld */,
 				91AAB3BE189657BF0047C560 /* Supporting Files */,
@@ -169,6 +174,8 @@
 		91AAB3BE189657BF0047C560 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				91AAB3C6189657BF0047C560 /* AppDelegate.h */,
+				91AAB3C7189657BF0047C560 /* AppDelegate.m */,
 				91AAB3BF189657BF0047C560 /* toDoApp-Info.plist */,
 				91AAB3C0189657BF0047C560 /* InfoPlist.strings */,
 				91AAB3C3189657BF0047C560 /* main.m */,
@@ -194,6 +201,18 @@
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
+		};
+		91AAB3FF1896618B0047C560 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				91AAB400189662100047C560 /* Element.h */,
+				91AAB401189662100047C560 /* Element.m */,
+				91AAB403189665190047C560 /* ManagedLesson.h */,
+				91AAB404189665190047C560 /* ManagedLesson.m */,
+			);
+			name = Model;
+			path = "/Users/benjaminsenechal/Documents/EPSI 2013:2014/Developpement iPhone/Projets/toDoApp/toDoApp/Model";
+			sourceTree = "<absolute>";
 		};
 /* End PBXGroup section */
 
@@ -327,6 +346,8 @@
 			files = (
 				91AAB3C8189657BF0047C560 /* AppDelegate.m in Sources */,
 				91AAB3CB189657BF0047C560 /* toDoApp.xcdatamodeld in Sources */,
+				91AAB402189662100047C560 /* Element.m in Sources */,
+				91AAB405189665190047C560 /* ManagedLesson.m in Sources */,
 				91AAB3C4189657BF0047C560 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

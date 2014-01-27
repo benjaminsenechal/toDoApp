@@ -15,4 +15,7 @@
     #import <Foundation/Foundation.h>
     #import <CoreData/CoreData.h>
     #import <Parse/Parse.h>
+    #import "Element.h"
+    #import "ManagedLesson.h"
+    #import "AppDelegate.h"
 #endif

@@ -16,6 +16,7 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
+    [ManagedElement addElementWithTitle:@"First task" AndText:@"Ball tip shankle jowl corned beef leberkas pork. Corned beef kielbasa pastrami bacon. Short ribs meatball flank, corned beef bacon doner short loin pork chop. Drumstick pastrami biltong cow."];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     

@@ -13,12 +13,13 @@
 +(void)addElementWithTitle:(NSString *)title AndText:(NSString *)text{
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     NSManagedObjectContext *context = [appDelegate managedObjectContext];
-    
+
     Element *e = [NSEntityDescription
                   insertNewObjectForEntityForName:@"Element"
                   inManagedObjectContext:context];
+    e.id_element = [NSString stringWithFormat:@"%@",e.objectID];
     e.title = title;
-    e.text = title;
+    e.content = text;
     e.completed = 0;
     e.created_at = [NSDate date];
     e.updated_at = [NSDate date];
@@ -35,7 +36,7 @@
     
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Element"];
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc]
-                                        initWithKey:@"created_at" ascending:NO];
+                                        initWithKey:@"updated_at" ascending:NO];
     [request setSortDescriptors:@[sortDescriptor]];
     
     NSError *error = nil;
@@ -50,7 +51,7 @@
     return fetchedArray;
 }
 
-+(void)updateElementWithTitle:(NSString*)oldTitle Title:(NSString *)title AndText:(NSString *)text{
++(void)updateElementWithID:(NSString*)uniqueID Title:(NSString *)title AndText:(NSString *)text{
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     NSManagedObjectContext *context = [appDelegate managedObjectContext];
     
@@ -59,15 +60,21 @@
     NSError *error = nil;
     NSArray *fetchedArray = [context executeFetchRequest:request error:&error];
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"title == %@",oldTitle];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"id_element == %@",uniqueID];
     [request setPredicate:predicate];
-
-    Element* element = [fetchedArray objectAtIndex:0];
+    
+    NSArray *filtered  = [fetchedArray filteredArrayUsingPredicate:predicate];
+    
+    Element *element = [filtered objectAtIndex:0];
     element.title = title;
-    element.text = text;
+    element.content = text;
+    
+    if (![context save:&error]) {
+        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+    }
 }
 
-+(void)deleteElementWithTitle:(NSString*)Title{
++(void)deleteElementWithID:(NSString*)uniqueID{
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     NSManagedObjectContext *context = [appDelegate managedObjectContext];
     
@@ -76,11 +83,17 @@
     NSError *error = nil;
     NSArray *fetchedArray = [context executeFetchRequest:request error:&error];
     
-    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"title == %@",Title];
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"id_element == %@",uniqueID];
     [request setPredicate:predicate];
     
-    Element* element = [fetchedArray objectAtIndex:0];
+    NSArray *filtered  = [fetchedArray filteredArrayUsingPredicate:predicate];
+    Element* element = [filtered objectAtIndex:0];
     [context deleteObject:element];
+
+    if (![context save:&error]) {
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        //abort();
+    }
 }
 
 @end

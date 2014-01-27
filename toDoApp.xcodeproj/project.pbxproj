@@ -36,6 +36,7 @@
 		91AAB41118967FED0047C560 /* Storyboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 91AAB41018967FED0047C560 /* Storyboard.storyboard */; };
 		91AAB4181896816B0047C560 /* homeViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91AAB4171896816B0047C560 /* homeViewController.m */; };
 		91AAB41B1896A6F60047C560 /* taskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91AAB41A1896A6F60047C560 /* taskViewController.m */; };
+		91AAB41E1896AC810047C560 /* detailsTaskViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 91AAB41D1896AC810047C560 /* detailsTaskViewController.m */; };
 		F0051E637D45416F918BC702 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 76B9CEDC5D7846F784FF893F /* libPods.a */; };
 /* End PBXBuildFile section */
 
@@ -88,6 +89,8 @@
 		91AAB4171896816B0047C560 /* homeViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = homeViewController.m; sourceTree = "<group>"; };
 		91AAB4191896A6F60047C560 /* taskViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = taskViewController.h; path = Controller/taskViewController.h; sourceTree = "<group>"; };
 		91AAB41A1896A6F60047C560 /* taskViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = taskViewController.m; path = Controller/taskViewController.m; sourceTree = "<group>"; };
+		91AAB41C1896AC810047C560 /* detailsTaskViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = detailsTaskViewController.h; path = Controller/detailsTaskViewController.h; sourceTree = "<group>"; };
+		91AAB41D1896AC810047C560 /* detailsTaskViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = detailsTaskViewController.m; path = Controller/detailsTaskViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -239,6 +242,8 @@
 				91AAB4171896816B0047C560 /* homeViewController.m */,
 				91AAB4191896A6F60047C560 /* taskViewController.h */,
 				91AAB41A1896A6F60047C560 /* taskViewController.m */,
+				91AAB41C1896AC810047C560 /* detailsTaskViewController.h */,
+				91AAB41D1896AC810047C560 /* detailsTaskViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -380,6 +385,7 @@
 				91AAB405189665190047C560 /* ManagedElement.m in Sources */,
 				91AAB41B1896A6F60047C560 /* taskViewController.m in Sources */,
 				91AAB3C4189657BF0047C560 /* main.m in Sources */,
+				91AAB41E1896AC810047C560 /* detailsTaskViewController.m in Sources */,
 				91AAB4181896816B0047C560 /* homeViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

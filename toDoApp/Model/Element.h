@@ -13,9 +13,10 @@
 @interface Element : NSManagedObject
 
 @property (nonatomic, retain) NSNumber * completed;
-@property (nonatomic, retain) NSString * title;
-@property (nonatomic, retain) NSString * text;
+@property (nonatomic, retain) NSString * content;
 @property (nonatomic, retain) NSDate * created_at;
+@property (nonatomic, retain) NSString * title;
 @property (nonatomic, retain) NSDate * updated_at;
+@property (nonatomic, retain) NSString * id_element;
 
 @end

@@ -9,7 +9,6 @@
 #import "taskViewController.h"
 
 @interface taskViewController ()
-
 @end
 
 @implementation taskViewController
@@ -34,5 +33,11 @@
             textTextView.text = @"Field required";
         }
     }
+}
+
+- (IBAction)cancelTask:(id)sender {
+    UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Storyboard" bundle:nil];
+    UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
+    window.rootViewController = [storyboard instantiateInitialViewController];
 }
 @end

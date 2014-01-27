@@ -9,8 +9,10 @@
 #import <UIKit/UIKit.h>
 #import "homeViewController.h"
 @interface taskViewController : UIViewController
+
 @property (strong, nonatomic) IBOutlet UITextField *titleTextField;
 @property (strong, nonatomic) IBOutlet UITextView *textTextView;
 - (IBAction)submitTask:(id)sender;
+- (IBAction)cancelTask:(id)sender;
 
 @end

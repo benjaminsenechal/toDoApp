@@ -12,9 +12,10 @@
 @implementation Element
 
 @dynamic completed;
-@dynamic title;
-@dynamic text;
+@dynamic content;
 @dynamic created_at;
+@dynamic title;
 @dynamic updated_at;
+@dynamic id_element;
 
 @end

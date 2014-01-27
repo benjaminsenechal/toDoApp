@@ -12,7 +12,6 @@
 
 +(void)addElementWithTitle:(NSString *)title AndText:(NSString *)text;
 +(NSArray *)listElements;
-+(void)deleteElementWithTitle:(NSString*)Title;
-+(void)updateElementWithTitle:(NSString*)oldTitle Title:(NSString *)title AndText:(NSString *)text;
-
++(void)deleteElementWithID:(NSString*)uniqueID;
++(void)updateElementWithID:(NSString*)uniqueID Title:(NSString *)title AndText:(NSString *)text;
 @end

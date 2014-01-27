@@ -6,20 +6,27 @@
 //  Copyright (c) 2014 Benjamin SENECHAL. All rights reserved.
 //
 
-#import "ManagedLesson.h"
+#import "ManagedElement.h"
 
-@implementation ManagedLesson
+@implementation ManagedElement
 
 +(void)addElementWithTitle:(NSString *)title AndText:(NSString *)text{
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     NSManagedObjectContext *context = [appDelegate managedObjectContext];
     
-    Element *e = [NSEntityDescription insertNewObjectForEntityForName:@"Element" inManagedObjectContext:context];
-    [e setTitle:title];
-    [e setText:text];
-    [e setCompleted:0];
-    [e setCreated_at:[NSDate date]];
-    [e setUpdated_at:[NSDate date]];
+    Element *e = [NSEntityDescription
+                  insertNewObjectForEntityForName:@"Element"
+                  inManagedObjectContext:context];
+    e.title = title;
+    e.text = title;
+    e.completed = 0;
+    e.created_at = [NSDate date];
+    e.updated_at = [NSDate date];
+    NSError *error;
+    
+    if (![context save:&error]) {
+        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+    }
 }
 
 +(NSArray *)listElements{
@@ -28,7 +35,7 @@
     
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Element"];
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc]
-                                        initWithKey:@"created_at" ascending:YES];
+                                        initWithKey:@"created_at" ascending:NO];
     [request setSortDescriptors:@[sortDescriptor]];
     
     NSError *error = nil;

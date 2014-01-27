@@ -8,7 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "AppDelegate.h"
-@interface ManagedLesson : NSObject
+@interface ManagedElement : NSObject
 
 +(void)addElementWithTitle:(NSString *)title AndText:(NSString *)text;
 +(NSArray *)listElements;

@@ -16,23 +16,13 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    self.window = [[UIWindow alloc] initWithFrame:[[UIScreen mainScreen] bounds]];
-    // Override point for customization after application launch.
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
+    
     [Parse setApplicationId:@"wGULnIXoQFmOleis5bUIJIzWatHt672J1NK9Tzr7"
                   clientKey:@"NsUYlZ9DDpMMi7LeUZ92lO19n5kePJMiZwhmVDU5"];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
-    
-    [ManagedLesson addElementWithTitle:@"Text" AndText:@"hrth"];
-    [ManagedLesson addElementWithTitle:@"Text" AndText:@"text"];
-    [ManagedLesson addElementWithTitle:@"Text" AndText:@"alllee"];
-    [ManagedLesson addElementWithTitle:@"Text" AndText:@"zzz"];
 
-    NSArray* array = [ManagedLesson listElements];
-    for(Element *n in array){
-        NSLog(@"%@", n.title);
-    }
     return YES;
 }
 

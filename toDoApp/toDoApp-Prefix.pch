@@ -16,6 +16,6 @@
     #import <CoreData/CoreData.h>
     #import <Parse/Parse.h>
     #import "Element.h"
-    #import "ManagedLesson.h"
+    #import "ManagedElement.h"
     #import "AppDelegate.h"
 #endif

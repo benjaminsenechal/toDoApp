@@ -8,10 +8,11 @@
 
 #import <UIKit/UIKit.h>
 #import "detailsTaskViewController.h"
-@interface homeViewController : UITableViewController<UITableViewDelegate, UITableViewDataSource, NSFetchedResultsControllerDelegate>
+@interface homeViewController : UITableViewController<UITableViewDelegate, UITableViewDataSource, UIGestureRecognizerDelegate>
 
 @property (nonatomic,strong) NSManagedObjectContext* managedObjectContext;
 @property (nonatomic, retain) NSFetchedResultsController *fetchedResultsController;
 @property (strong, nonatomic) NSMutableArray* elements;
 @property (nonatomic) NSInteger count;
+
 @end

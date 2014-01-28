@@ -20,7 +20,7 @@
     e.id_element = [NSString stringWithFormat:@"%@",e.objectID];
     e.title = title;
     e.content = text;
-    e.completed = 0;
+    e.completed = [[NSNumber alloc] initWithBool:FALSE];
     e.created_at = [NSDate date];
     e.updated_at = [NSDate date];
     NSError *error;
@@ -95,5 +95,32 @@
         //abort();
     }
 }
+
++(void)setCompletedWithID:(NSString*)uniqueID{
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
+    NSManagedObjectContext *context = [appDelegate managedObjectContext];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:[NSEntityDescription entityForName:@"Element" inManagedObjectContext:context]];
+    NSError *error = nil;
+    NSArray *fetchedArray = [context executeFetchRequest:request error:&error];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"id_element == %@",uniqueID];
+    [request setPredicate:predicate];
+    
+    NSArray *filtered  = [fetchedArray filteredArrayUsingPredicate:predicate];
+    Element* element = [filtered objectAtIndex:0];
+    
+    if([element.completed isEqualToNumber:[[NSNumber alloc] initWithBool:FALSE]])
+        element.completed = [[NSNumber alloc] initWithBool:TRUE];
+    else if ([element.completed isEqualToNumber:[[NSNumber alloc] initWithBool:TRUE]])
+        element.completed = [[NSNumber alloc] initWithBool:FALSE];
+    
+    if (![context save:&error]) {
+        NSLog(@"Unresolved error %@, %@", error, [error userInfo]);
+        //abort();
+    }
+}
+
 
 @end

@@ -14,4 +14,6 @@
 +(NSArray *)listElements;
 +(void)deleteElementWithID:(NSString*)uniqueID;
 +(void)updateElementWithID:(NSString*)uniqueID Title:(NSString *)title AndText:(NSString *)text;
++(void)setCompletedWithID:(NSString*)uniqueID;
+
 @end

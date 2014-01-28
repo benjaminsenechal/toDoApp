@@ -25,8 +25,31 @@
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(dropViewDidBeginRefreshing:) forControlEvents:UIControlEventValueChanged];
     [self.tableView addSubview:refreshControl];
+    
+    UILongPressGestureRecognizer *lpgr = [[UILongPressGestureRecognizer alloc]
+                                          initWithTarget:self action:@selector(handleLongPress:)];
+    lpgr.minimumPressDuration = 2.0;
+    lpgr.delegate = self;
+    [self.tableView addGestureRecognizer:lpgr];
+    
 }
 
+-(void)handleLongPress:(UILongPressGestureRecognizer *)gestureRecognizer
+{
+    CGPoint p = [gestureRecognizer locationInView:self.tableView];
+    
+    NSIndexPath *indexPath = [self.tableView indexPathForRowAtPoint:p];
+    UITableViewCell *selectedCell = [self.tableView cellForRowAtIndexPath:indexPath];
+
+    if (indexPath != nil){
+    Element *e = [elements objectAtIndex:indexPath.row];
+        if([e.completed isEqualToNumber:[[NSNumber alloc] initWithBool:FALSE]]){
+            selectedCell.accessoryType = UITableViewCellAccessoryCheckmark;
+            NSLog(@"%@ - %@", e.title, e.completed);
+            [ManagedElement setCompletedWithID:e.id_element];
+        }
+    }
+}
 
 - (void)dropViewDidBeginRefreshing:(UIRefreshControl *)refreshControl
 {
@@ -38,9 +61,6 @@
     });
 }
 
-
-#pragma mark - Table view data source
-
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView
 {
     return 1;
@@ -49,9 +69,10 @@
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
 {
     count = [elements count];
-	if (count == 0) {
+    
+	if (count == 0)
 		count = 1;
-	}
+	
     return count;
 }
 
@@ -64,11 +85,13 @@
     [dateFormatter setDateStyle:NSDateFormatterMediumStyle];
     if ([elements count] > 0) {
         Element *e = [elements objectAtIndex:indexPath.row];
+        if([e.completed isEqualToNumber:[[NSNumber alloc] initWithBool:TRUE]]){
+            cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        }
         cell.textLabel.text = e.title;
         NSString *d= [dateFormatter stringFromDate:e.created_at];
         cell.detailTextLabel.text = d;
     }
-    
     return cell;
 }
 
@@ -78,15 +101,6 @@
     Element* taskSelected = [elements objectAtIndex:indexPath.row];
     [detailsTaskViewController myObject:taskSelected];
 }
-
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
-{
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
 
 - (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -98,6 +112,13 @@
     }
 }
 
+ // Override to support conditional editing of the table view.
+/* - (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath
+ {
+ // Return NO if you do not want the specified item to be editable.
+ return YES;
+ }
+ */
 
 // Override to support rearranging the table view.
 /*

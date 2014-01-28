@@ -16,14 +16,14 @@
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-    [ManagedElement addElementWithTitle:@"First task" AndText:@"Ball tip shankle jowl corned beef leberkas pork. Corned beef kielbasa pastrami bacon. Short ribs meatball flank, corned beef bacon doner short loin pork chop. Drumstick pastrami biltong cow."];
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
     
     [Parse setApplicationId:@"wGULnIXoQFmOleis5bUIJIzWatHt672J1NK9Tzr7"
                   clientKey:@"NsUYlZ9DDpMMi7LeUZ92lO19n5kePJMiZwhmVDU5"];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
-
+    [ManagedElement addElementWithTitle:@"First task" AndText:@"Ball tip shankle jowl corned beef leberkas pork. Corned beef kielbasa pastrami bacon. Short ribs meatball flank, corned beef bacon doner short loin pork chop. Drumstick pastrami biltong cow."];
+    [ManagedElement listElementsWithParse];
     return YES;
 }
 

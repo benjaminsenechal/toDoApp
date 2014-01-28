@@ -12,8 +12,11 @@
 
 +(void)addElementWithTitle:(NSString *)title AndText:(NSString *)text;
 +(NSArray *)listElements;
++(void)addElementFromParseWithTitle:(NSString *)title AndText:(NSString *)text;
 +(void)deleteElementWithID:(NSString*)uniqueID;
 +(void)updateElementWithID:(NSString*)uniqueID Title:(NSString *)title AndText:(NSString *)text;
 +(void)setCompletedWithID:(NSString*)uniqueID;
-
++(void)listElementsWithParse;
++(Element*)findByID:(NSString*)uniqueID;
+    
 @end

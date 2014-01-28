@@ -14,6 +14,7 @@
 @property (strong, nonatomic) IBOutlet UITextView *textTextView;
 +(void)myObject:(Element*)e;
 - (IBAction)saveTask:(id)sender;
+- (IBAction)touchTextField:(id)sender;
 
 @end
 

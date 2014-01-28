@@ -14,13 +14,21 @@
 @implementation homeViewController
 @synthesize managedObjectContext, elements, count;
 
+-(void)viewDidAppear:(BOOL)animated{
+    [self finishedLoad];
+}
+
+-(void)finishedLoad{
+    elements = [[NSMutableArray alloc] initWithArray:[ManagedElement listElements]];
+    [[NSNotificationCenter defaultCenter]removeObserver:self name:@"notificationLoadDatasFinished" object:nil];
+    [self.tableView reloadData];
+}
+
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    elements = [[NSMutableArray alloc] initWithArray:[ManagedElement listElements]];
-    for(Element *n in elements){
-        NSLog(@"id:%@, titre:%@, text:%@ \n\n\n", n.id_element, n.title, n.content);
-    }
+
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(finishedLoad) name:@"notificationLoadDatasFinished" object:nil];
     
     UIRefreshControl *refreshControl = [[UIRefreshControl alloc] init];
     [refreshControl addTarget:self action:@selector(dropViewDidBeginRefreshing:) forControlEvents:UIControlEventValueChanged];
@@ -28,10 +36,9 @@
     
     UILongPressGestureRecognizer *lpgr = [[UILongPressGestureRecognizer alloc]
                                           initWithTarget:self action:@selector(handleLongPress:)];
-    lpgr.minimumPressDuration = 2.0;
+    lpgr.minimumPressDuration = 1.2;
     lpgr.delegate = self;
     [self.tableView addGestureRecognizer:lpgr];
-    
 }
 
 -(void)handleLongPress:(UILongPressGestureRecognizer *)gestureRecognizer
@@ -45,8 +52,8 @@
     Element *e = [elements objectAtIndex:indexPath.row];
         if([e.completed isEqualToNumber:[[NSNumber alloc] initWithBool:FALSE]]){
             selectedCell.accessoryType = UITableViewCellAccessoryCheckmark;
-            NSLog(@"%@ - %@", e.title, e.completed);
             [ManagedElement setCompletedWithID:e.id_element];
+            [self.tableView reloadData];
         }
     }
 }
@@ -56,8 +63,8 @@
     double delayInSeconds = 0.5;
     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, delayInSeconds * NSEC_PER_SEC);
     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+        [self finishedLoad];
         [refreshControl endRefreshing];
-        [self.tableView reloadData];
     });
 }
 
@@ -87,7 +94,10 @@
         Element *e = [elements objectAtIndex:indexPath.row];
         if([e.completed isEqualToNumber:[[NSNumber alloc] initWithBool:TRUE]]){
             cell.accessoryType = UITableViewCellAccessoryCheckmark;
+        }else{
+            cell.accessoryType = UITableViewCellAccessoryNone;
         }
+        
         cell.textLabel.text = e.title;
         NSString *d= [dateFormatter stringFromDate:e.created_at];
         cell.detailTextLabel.text = d;
@@ -108,7 +118,7 @@
         Element *e = [elements objectAtIndex:indexPath.row];
         [ManagedElement deleteElementWithID:e.id_element];
         [self.elements removeObjectAtIndex:indexPath.row];
-        [self.tableView reloadData];
+        [self finishedLoad];
     }
 }
 

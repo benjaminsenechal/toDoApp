@@ -21,6 +21,8 @@ Element* taskReceived;
     [self.navigationItem setTitle:taskReceived.title];
     [titleLabel setText:taskReceived.title];
     textTextView.text = taskReceived.content;
+    UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchTextField:)];
+    [textTextView addGestureRecognizer:gestureRecognizer];
 }
 
 +(void)myObject:(Element*)e{
@@ -41,6 +43,12 @@ Element* taskReceived;
             textTextView.text = @"Field required";
         }
     }
+}
+
+- (IBAction)touchTextField:(id)sender {
+    [textTextView becomeFirstResponder];
+    [titleLabel setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
+    [textTextView setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
 }
 
 @end

@@ -27,6 +27,34 @@
     
     if (![context save:&error]) {
         NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
+    }else{
+        PFObject *element = [PFObject objectWithClassName:@"Element"];
+        element[@"id_element"] = e.id_element;
+        element[@"content"] = e.content;
+        element[@"title"] = e.title;
+        element[@"completed"] = e.completed;
+        element[@"created_at"] = e.created_at;
+        element[@"updated_at"] = e.updated_at;
+        [element saveInBackground];
+    }
+}
+
++(void)addElementFromParseWithTitle:(NSString *)title AndText:(NSString *)text{
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
+    NSManagedObjectContext *context = [appDelegate managedObjectContext];
+    
+    Element *e = [NSEntityDescription
+                  insertNewObjectForEntityForName:@"Element"
+                  inManagedObjectContext:context];
+    e.id_element = [NSString stringWithFormat:@"%@",e.objectID];
+    e.title = title;
+    e.content = text;
+    e.completed = [[NSNumber alloc] initWithBool:FALSE];
+    e.created_at = [NSDate date];
+    e.updated_at = [NSDate date];
+    NSError *error;
+    if (![context save:&error]) {
+        NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
     }
 }
 
@@ -51,6 +79,28 @@
     return fetchedArray;
 }
 
++(void)listElementsWithParse{
+    PFQuery *query = [PFQuery queryWithClassName:@"Element"];
+    [query findObjectsInBackgroundWithBlock:^(NSArray *objects, NSError *error) {
+        if (!error) {
+            NSLog(@"Successfully retrieved: %@", objects);
+            for (int i=0; i<[objects count]; i++){
+                PFObject *eReceived = [objects objectAtIndex:i];
+                Element *element = [self findByID:eReceived[@"id_element"]];
+                NSLog(@"actuel : %@ - reçu :%@", element.title, eReceived[@"title"]);
+                if (!element){
+                    NSLog(@"passed");
+                    [self addElementFromParseWithTitle:eReceived[@"title"] AndText:eReceived[@"content"]];
+                }
+            }
+        } else {
+            NSString *errorString = [[error userInfo] objectForKey:@"error"];
+            NSLog(@"Error: %@", errorString);
+        }
+    }];
+    [[NSNotificationCenter defaultCenter]postNotification:[NSNotification notificationWithName:@"notificationLoadDatasFinished" object:nil]];
+}
+
 +(void)updateElementWithID:(NSString*)uniqueID Title:(NSString *)title AndText:(NSString *)text{
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     NSManagedObjectContext *context = [appDelegate managedObjectContext];
@@ -66,12 +116,43 @@
     NSArray *filtered  = [fetchedArray filteredArrayUsingPredicate:predicate];
     
     Element *element = [filtered objectAtIndex:0];
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"Element"];
+    [query whereKey:@"id_element" equalTo:element.id_element];
+    PFObject *elementReceived = [query getFirstObject];
+    elementReceived[@"title"] = title;
+    elementReceived[@"content"] = text;
+    elementReceived[@"updated_at"] = [NSDate date];
+    [elementReceived saveInBackground];
+    
     element.title = title;
     element.content = text;
+    element.updated_at = [NSDate date];
     
     if (![context save:&error]) {
         NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
     }
+}
+
++(Element*)findByID:(NSString*)uniqueID{
+    Element *element;
+    AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
+    NSManagedObjectContext *context = [appDelegate managedObjectContext];
+    
+    NSFetchRequest *request = [[NSFetchRequest alloc] init];
+    [request setEntity:[NSEntityDescription entityForName:@"Element" inManagedObjectContext:context]];
+    NSError *error = nil;
+    NSArray *fetchedArray = [context executeFetchRequest:request error:&error];
+    
+    NSPredicate *predicate = [NSPredicate predicateWithFormat:@"id_element == %@",uniqueID];
+    [request setPredicate:predicate];
+    
+    NSArray *filtered  = [fetchedArray filteredArrayUsingPredicate:predicate];
+    if ([filtered count]> 0){
+        element = [filtered objectAtIndex:0];
+    }
+    
+    return element;
 }
 
 +(void)deleteElementWithID:(NSString*)uniqueID{
@@ -87,7 +168,13 @@
     [request setPredicate:predicate];
     
     NSArray *filtered  = [fetchedArray filteredArrayUsingPredicate:predicate];
-    Element* element = [filtered objectAtIndex:0];
+    Element *element = [filtered objectAtIndex:0];
+    
+    PFQuery *query = [PFQuery queryWithClassName:@"Element"];
+    [query whereKey:@"id_element" equalTo:element.id_element];
+    PFObject *elementReceived = [query getFirstObject];
+    [elementReceived deleteEventually];
+    
     [context deleteObject:element];
 
     if (![context save:&error]) {
@@ -111,10 +198,17 @@
     NSArray *filtered  = [fetchedArray filteredArrayUsingPredicate:predicate];
     Element* element = [filtered objectAtIndex:0];
     
-    if([element.completed isEqualToNumber:[[NSNumber alloc] initWithBool:FALSE]])
+    if([element.completed isEqualToNumber:[[NSNumber alloc] initWithBool:FALSE]]){
         element.completed = [[NSNumber alloc] initWithBool:TRUE];
-    else if ([element.completed isEqualToNumber:[[NSNumber alloc] initWithBool:TRUE]])
-        element.completed = [[NSNumber alloc] initWithBool:FALSE];
+        element.updated_at = [NSDate date];
+
+        PFQuery *query = [PFQuery queryWithClassName:@"Element"];
+        [query whereKey:@"id_element" equalTo:element.id_element];
+        PFObject *elementReceived = [query getFirstObject];
+        elementReceived[@"completed"] = @1;
+        elementReceived[@"updated_at"] = [NSDate date];
+        [elementReceived saveInBackground];
+    }
     
     if (![context save:&error]) {
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);

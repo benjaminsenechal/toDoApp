@@ -18,11 +18,29 @@
 {
     [super viewDidLoad];
     
-    titleTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 30, 320, 30)];
-    textTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 80, 320, 100)];
-    datePickerView = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 190, 320, 50)];
-    [titleTextField setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
-    [textTextView setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
+    titleTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 30, 320, 40)];
+    textTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 80, 320, 130)];
+    datePickerView = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 230, 320, 50)];
+    [scrollView setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
+    [titleTextField setBackgroundColor:[UIColor whiteColor]];
+    [textTextView setBackgroundColor:[UIColor whiteColor]];
+    [datePickerView setBackgroundColor:[UIColor whiteColor]];
+    titleTextField.layer.masksToBounds=YES;
+    titleTextField.layer.borderColor=[[UIColor lightGrayColor]CGColor];
+    titleTextField.layer.borderWidth= 0.5f;
+    textTextView.layer.masksToBounds=YES;
+    textTextView.layer.borderColor=[[UIColor lightGrayColor]CGColor];
+    textTextView.layer.borderWidth= 0.5f;
+    datePickerView.layer.masksToBounds=YES;
+    datePickerView.layer.borderColor=[[UIColor lightGrayColor]CGColor];
+    datePickerView.layer.borderWidth= 0.5f;
+    
+    [titleTextField setPlaceholder:@"Title"];
+    UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 20)];
+    titleTextField.leftView = paddingView;
+    titleTextField.leftViewMode = UITextFieldViewModeAlways;
+    
+    textTextView.textAlignment = NSTextAlignmentJustified;
     [textTextView setUserInteractionEnabled:YES];
     [textTextView textContainerInset];
     textTextView.font = FONT(15);
@@ -44,7 +62,6 @@
 }
 
 - (IBAction)submitTask:(id)sender {
-    NSLog(@"%@", self.datePickerView.date);
     if ([textTextView.text length]>0 && [titleTextField.text length]>0){
         [ManagedElement addElementWithTitle:titleTextField.text Text:textTextView.text AndDueDate:datePickerView.date];
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Storyboard" bundle:nil];

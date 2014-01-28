@@ -19,14 +19,31 @@ Element* taskReceived;
 {
     [super viewDidLoad];
     [self.navigationItem setTitle:taskReceived.title];
-    
+
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(touchTextField:)];
     [textTextView addGestureRecognizer:gestureRecognizer];
-    titleTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 30, 320, 30)];
-    textTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 80, 320, 100)];
-    datePickerView = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 190, 320, 50)];
-    [titleTextField setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
-    [textTextView setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
+    titleTextField = [[UITextField alloc] initWithFrame:CGRectMake(0, 30, 320, 40)];
+    textTextView = [[UITextView alloc] initWithFrame:CGRectMake(0, 80, 320, 130)];
+    datePickerView = [[UIDatePicker alloc] initWithFrame:CGRectMake(0, 230, 320, 50)];
+    [scrollView setBackgroundColor:[UIColor groupTableViewBackgroundColor]];
+    [titleTextField setBackgroundColor:[UIColor whiteColor]];
+    [datePickerView setBackgroundColor:[UIColor whiteColor]];
+    [textTextView setBackgroundColor:[UIColor whiteColor]];
+    titleTextField.layer.masksToBounds=YES;
+    titleTextField.layer.borderColor=[[UIColor lightGrayColor]CGColor];
+    titleTextField.layer.borderWidth= 0.5f;
+    textTextView.layer.masksToBounds=YES;
+    textTextView.layer.borderColor=[[UIColor lightGrayColor]CGColor];
+    textTextView.layer.borderWidth= 0.5f;
+    datePickerView.layer.masksToBounds=YES;
+    datePickerView.layer.borderColor=[[UIColor lightGrayColor]CGColor];
+    datePickerView.layer.borderWidth= 0.5f;
+    
+    UIView *paddingView = [[UIView alloc] initWithFrame:CGRectMake(0, 0, 5, 20)];
+    titleTextField.leftView = paddingView;
+    titleTextField.leftViewMode = UITextFieldViewModeAlways;
+    
+    textTextView.textAlignment = NSTextAlignmentJustified;
     [textTextView setUserInteractionEnabled:YES];
     [textTextView textContainerInset];
     textTextView.font = FONT(15);
@@ -37,10 +54,8 @@ Element* taskReceived;
     
     [titleTextField setText:taskReceived.title];
     textTextView.text = taskReceived.content;
-    NSLog(@"due date %@", taskReceived.due_date);
     
     [datePickerView setDate:taskReceived.due_date];
-    
     [scrollView setScrollEnabled:YES];
     [scrollView setContentSize:CGSizeMake(320, 500)];
     [scrollView addSubview:textTextView];

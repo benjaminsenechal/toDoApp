@@ -90,9 +90,7 @@
             for (int i=0; i<[objects count]; i++){
                 PFObject *eReceived = [objects objectAtIndex:i];
                 Element *element = [self findByID:eReceived[@"id_element"]];
-                NSLog(@"actuel : %@ - reçu :%@", element.title, eReceived[@"title"]);
                 if (!element){
-                    NSLog(@"passed");
                     [self addElementFromParseWithTitle:eReceived[@"title"] Text:eReceived[@"text"] AndDueDate:eReceived[@"due_date"]];
                 }
             }
@@ -131,6 +129,7 @@
     
     element.title = title;
     element.content = text;
+    element.due_date = date;
     element.updated_at = [NSDate date];
     
     if (![context save:&error]) {

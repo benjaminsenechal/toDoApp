@@ -10,11 +10,13 @@
 
 @interface detailsTaskViewController : UIViewController
 
-@property (strong, nonatomic) IBOutlet UITextField *titleLabel;
+@property (strong, nonatomic) IBOutlet UITextField *titleTextField;
 @property (strong, nonatomic) IBOutlet UITextView *textTextView;
+@property (strong, nonatomic) IBOutlet UIDatePicker *datePickerView;
 +(void)myObject:(Element*)e;
 - (IBAction)saveTask:(id)sender;
 - (IBAction)touchTextField:(id)sender;
+@property (strong, nonatomic) IBOutlet UIScrollView *scrollView;
 
 @end
 

@@ -10,7 +10,7 @@
 
 @implementation ManagedElement
 
-+(void)addElementWithTitle:(NSString *)title AndText:(NSString *)text{
++(void)addElementWithTitle:(NSString *)title Text:(NSString *)text AndDueDate:(NSDate*)date{
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     NSManagedObjectContext *context = [appDelegate managedObjectContext];
 
@@ -22,6 +22,7 @@
     e.content = text;
     e.completed = [[NSNumber alloc] initWithBool:FALSE];
     e.created_at = [NSDate date];
+    e.due_date = date;
     e.updated_at = [NSDate date];
     NSError *error;
     
@@ -35,11 +36,12 @@
         element[@"completed"] = e.completed;
         element[@"created_at"] = e.created_at;
         element[@"updated_at"] = e.updated_at;
+        element[@"due_date"] = e.due_date;
         [element saveInBackground];
     }
 }
 
-+(void)addElementFromParseWithTitle:(NSString *)title AndText:(NSString *)text{
++(void)addElementFromParseWithTitle:(NSString *)title Text:(NSString *)text AndDueDate:(NSDate*)date{
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     NSManagedObjectContext *context = [appDelegate managedObjectContext];
     
@@ -52,6 +54,7 @@
     e.completed = [[NSNumber alloc] initWithBool:FALSE];
     e.created_at = [NSDate date];
     e.updated_at = [NSDate date];
+    e.due_date = date;
     NSError *error;
     if (![context save:&error]) {
         NSLog(@"Whoops, couldn't save: %@", [error localizedDescription]);
@@ -90,7 +93,7 @@
                 NSLog(@"actuel : %@ - reçu :%@", element.title, eReceived[@"title"]);
                 if (!element){
                     NSLog(@"passed");
-                    [self addElementFromParseWithTitle:eReceived[@"title"] AndText:eReceived[@"content"]];
+                    [self addElementFromParseWithTitle:eReceived[@"title"] Text:eReceived[@"text"] AndDueDate:eReceived[@"due_date"]];
                 }
             }
         } else {
@@ -101,7 +104,7 @@
     [[NSNotificationCenter defaultCenter]postNotification:[NSNotification notificationWithName:@"notificationLoadDatasFinished" object:nil]];
 }
 
-+(void)updateElementWithID:(NSString*)uniqueID Title:(NSString *)title AndText:(NSString *)text{
++(void)updateElementWithID:(NSString*)uniqueID Title:(NSString *)title Text:(NSString *)text AndDueDate:(NSDate*)date{
     AppDelegate *appDelegate = (AppDelegate *)[[UIApplication sharedApplication]delegate];
     NSManagedObjectContext *context = [appDelegate managedObjectContext];
     
@@ -122,6 +125,7 @@
     PFObject *elementReceived = [query getFirstObject];
     elementReceived[@"title"] = title;
     elementReceived[@"content"] = text;
+    elementReceived[@"due_date"] = date;
     elementReceived[@"updated_at"] = [NSDate date];
     [elementReceived saveInBackground];
     

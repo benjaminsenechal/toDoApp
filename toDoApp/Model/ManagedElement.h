@@ -10,11 +10,11 @@
 #import "AppDelegate.h"
 @interface ManagedElement : NSObject
 
-+(void)addElementWithTitle:(NSString *)title AndText:(NSString *)text;
++(void)addElementWithTitle:(NSString *)title Text:(NSString *)text AndDueDate:(NSDate*)date;
 +(NSArray *)listElements;
-+(void)addElementFromParseWithTitle:(NSString *)title AndText:(NSString *)text;
++(void)addElementFromParseWithTitle:(NSString *)title Text:(NSString *)text AndDueDate:(NSDate*)date;
 +(void)deleteElementWithID:(NSString*)uniqueID;
-+(void)updateElementWithID:(NSString*)uniqueID Title:(NSString *)title AndText:(NSString *)text;
++(void)updateElementWithID:(NSString*)uniqueID Title:(NSString *)title Text:(NSString *)text AndDueDate:(NSDate*)date;
 +(void)setCompletedWithID:(NSString*)uniqueID;
 +(void)listElementsWithParse;
 +(Element*)findByID:(NSString*)uniqueID;

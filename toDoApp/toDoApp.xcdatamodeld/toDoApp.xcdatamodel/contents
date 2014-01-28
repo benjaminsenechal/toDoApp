@@ -4,11 +4,12 @@
         <attribute name="completed" optional="YES" attributeType="Boolean" defaultValueString="0" syncable="YES"/>
         <attribute name="content" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="created_at" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="due_date" optional="YES" attributeType="Date" syncable="YES"/>
         <attribute name="id_element" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
         <attribute name="updated_at" optional="YES" attributeType="Date" syncable="YES"/>
     </entity>
     <elements>
-        <element name="Element" positionX="-2304" positionY="-909" width="128" height="133"/>
+        <element name="Element" positionX="-2304" positionY="-909" width="128" height="148"/>
     </elements>
 </model>

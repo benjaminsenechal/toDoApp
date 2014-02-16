@@ -178,7 +178,6 @@
 				91AAB40F18967FDD0047C560 /* View */,
 				91AAB3FF1896618B0047C560 /* Model */,
 				91AAB3CC189657BF0047C560 /* Images.xcassets */,
-				91AAB3C9189657BF0047C560 /* toDoApp.xcdatamodeld */,
 				91AAB3BE189657BF0047C560 /* Supporting Files */,
 			);
 			path = toDoApp;
@@ -218,6 +217,7 @@
 		91AAB3FF1896618B0047C560 /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				91AAB3C9189657BF0047C560 /* toDoApp.xcdatamodeld */,
 				91AAB400189662100047C560 /* Element.h */,
 				91AAB401189662100047C560 /* Element.m */,
 				91AAB403189665190047C560 /* ManagedElement.h */,
@@ -297,6 +297,14 @@
 				LastUpgradeCheck = 0500;
 				ORGANIZATIONNAME = "Benjamin SENECHAL";
 				TargetAttributes = {
+					91AAB3B1189657BF0047C560 = {
+						DevelopmentTeam = G97G32U59S;
+						SystemCapabilities = {
+							com.apple.iCloud = {
+								enabled = 0;
+							};
+						};
+					};
 					91AAB3D1189657BF0047C560 = {
 						TestTargetID = 91AAB3B1189657BF0047C560;
 					};
@@ -506,10 +514,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "toDoApp/toDoApp-Prefix.pch";
 				INFOPLIST_FILE = "toDoApp/toDoApp-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "CCC815F8-AD16-4055-910B-69EB6FD3D808";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -521,10 +532,13 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				GCC_PRECOMPILE_PREFIX_HEADER = YES;
 				GCC_PREFIX_HEADER = "toDoApp/toDoApp-Prefix.pch";
 				INFOPLIST_FILE = "toDoApp/toDoApp-Info.plist";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "CCC815F8-AD16-4055-910B-69EB6FD3D808";
 				TARGETED_DEVICE_FAMILY = 1;
 				WRAPPER_EXTENSION = app;
 			};
@@ -611,7 +625,8 @@
 				91AAB3CA189657BF0047C560 /* toDoApp.xcdatamodel */,
 			);
 			currentVersion = 91AAB3CA189657BF0047C560 /* toDoApp.xcdatamodel */;
-			path = toDoApp.xcdatamodeld;
+			name = toDoApp.xcdatamodeld;
+			path = ../toDoApp.xcdatamodeld;
 			sourceTree = "<group>";
 			versionGroupType = wrapper.xcdatamodel;
 		};

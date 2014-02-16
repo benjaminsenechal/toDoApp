@@ -24,6 +24,7 @@
     e.created_at = [NSDate date];
     e.due_date = date;
     e.updated_at = [NSDate date];
+    
     NSError *error;
     
     if (![context save:&error]) {
@@ -66,6 +67,7 @@
     NSManagedObjectContext *context = [appDelegate managedObjectContext];
     
     NSFetchRequest *request = [NSFetchRequest fetchRequestWithEntityName:@"Element"];
+    
     NSSortDescriptor *sortDescriptor = [[NSSortDescriptor alloc]
                                         initWithKey:@"updated_at" ascending:NO];
     [request setSortDescriptors:@[sortDescriptor]];
@@ -172,13 +174,13 @@
     
     NSArray *filtered  = [fetchedArray filteredArrayUsingPredicate:predicate];
     Element *element = [filtered objectAtIndex:0];
+    [context deleteObject:element];
     
     PFQuery *query = [PFQuery queryWithClassName:@"Element"];
     [query whereKey:@"id_element" equalTo:element.id_element];
     PFObject *elementReceived = [query getFirstObject];
     [elementReceived deleteEventually];
-    
-    [context deleteObject:element];
+
 
     if (![context save:&error]) {
         NSLog(@"Unresolved error %@, %@", error, [error userInfo]);

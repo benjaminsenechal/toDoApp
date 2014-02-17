@@ -64,6 +64,15 @@
 - (IBAction)submitTask:(id)sender {
     if ([textTextView.text length]>0 && [titleTextField.text length]>0){
         [ManagedElement addElementWithTitle:titleTextField.text Text:textTextView.text AndDueDate:datePickerView.date];
+        
+        UILocalNotification *localNotification = [[UILocalNotification alloc] init];
+        localNotification.fireDate = datePickerView.date;
+        localNotification.alertBody = titleTextField.text;
+        localNotification.timeZone = [NSTimeZone defaultTimeZone];
+        localNotification.soundName = UILocalNotificationDefaultSoundName;
+        [[UIApplication sharedApplication] scheduleLocalNotification:localNotification];
+        [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadData" object:self];
+        
         UIStoryboard *storyboard = [UIStoryboard storyboardWithName:@"Storyboard" bundle:nil];
         UIWindow *window = [[[UIApplication sharedApplication] delegate] window];
         window.rootViewController = [storyboard instantiateInitialViewController];

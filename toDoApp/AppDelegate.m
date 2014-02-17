@@ -18,25 +18,46 @@
 {
     self.window.backgroundColor = [UIColor whiteColor];
     [self.window makeKeyAndVisible];
-    
+
     [application registerForRemoteNotificationTypes:
      UIRemoteNotificationTypeBadge |
      UIRemoteNotificationTypeAlert |
      UIRemoteNotificationTypeSound];
     
+    UILocalNotification *locationNotification = [launchOptions objectForKey:UIApplicationLaunchOptionsLocalNotificationKey];
+    if (locationNotification) {
+        application.applicationIconBadgeNumber = 0;
+    }
+    
     NSDateFormatter *df = [[NSDateFormatter alloc] init];
+    NSTimeZone *gmt = [NSTimeZone timeZoneWithAbbreviation:@"GMT+01:00"];
+    [df setTimeZone:gmt];
     [df setDateFormat:@"yyyy-MM-dd hh:mm:ss a"];
     NSDate *date = [df dateFromString:@"2014-01-29 10:00:00 am"];
     
     [Parse setApplicationId:@"wGULnIXoQFmOleis5bUIJIzWatHt672J1NK9Tzr7"
                   clientKey:@"NsUYlZ9DDpMMi7LeUZ92lO19n5kePJMiZwhmVDU5"];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
-
     
     [ManagedElement addElementWithTitle:@"What I achieved" Text:@" * a list of current to-dos\n * create a new to-do\n * edit an existing to-do\n * delete an existing to-do\n * mark an existing to-do as completed (Press 1sec the row to do it)\n * synchronized with Parse API (CRUD)" AndDueDate:date];
 
     [ManagedElement listElementsWithParse];
     return YES;
+}
+
+- (void)application:(UIApplication *)application didReceiveLocalNotification:(UILocalNotification *)notification
+{
+    UIApplicationState state = [application applicationState];
+    if (state == UIApplicationStateActive) {
+        UIAlertView *alert = [[UIAlertView alloc] initWithTitle:@"Reminder"
+                                                        message:notification.alertBody
+                                                       delegate:self cancelButtonTitle:@"Ok"
+                                              otherButtonTitles:nil];
+        [alert show];
+    }
+    
+    [[NSNotificationCenter defaultCenter] postNotificationName:@"reloadData" object:self];
+    application.applicationIconBadgeNumber = 0;
 }
 
 - (void)applicationWillResignActive:(UIApplication *)application

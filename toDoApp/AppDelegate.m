@@ -39,7 +39,7 @@
                   clientKey:@"NsUYlZ9DDpMMi7LeUZ92lO19n5kePJMiZwhmVDU5"];
     [PFAnalytics trackAppOpenedWithLaunchOptions:launchOptions];
     
-    [ManagedElement addElementWithTitle:@"What I achieved" Text:@" * a list of current to-dos\n * create a new to-do\n * edit an existing to-do\n * delete an existing to-do\n * mark an existing to-do as completed (Press 1sec the row to do it)\n * synchronized with Parse API (CRUD)" AndDueDate:date];
+    //[ManagedElement addElementWithTitle:@"What I achieved" Text:@" * a list of current to-dos\n * create a new to-do\n * edit an existing to-do\n * delete an existing to-do\n * mark an existing to-do as completed (Press 1sec the row to do it)\n * synchronized with Parse API (CRUD)" AndDueDate:date];
 
     [ManagedElement listElementsWithParse];
     return YES;

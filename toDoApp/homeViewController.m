@@ -15,7 +15,9 @@
 @synthesize managedObjectContext, elements, count;
 
 -(void)viewDidAppear:(BOOL)animated{
-    [self finishedLoad];
+    //[self performSelectorOnMainThread:@selector(finishedLoad) withObject:nil waitUntilDone:NO];
+    //[self finishedLoad];
+    [self performSelectorInBackground:@selector(finishedLoad) withObject:nil];
 }
 
 -(void)finishedLoad{
@@ -116,10 +118,21 @@
 {
     if (editingStyle == UITableViewCellEditingStyleDelete) {
         Element *e = [elements objectAtIndex:indexPath.row];
-        [ManagedElement deleteElementWithID:e.id_element];
+        NSDictionary *args = [NSDictionary dictionaryWithObjectsAndKeys:
+                               e.id_element, @"id_element",
+                               nil];
+        [self performSelectorInBackground:@selector(deleteObject:)
+                               withObject:args];
         [self.elements removeObjectAtIndex:indexPath.row];
-        [self finishedLoad];
+        [self.tableView deleteRowsAtIndexPaths:[NSArray arrayWithObject:indexPath] withRowAnimation:UITableViewRowAnimationFade];
     }
+}
+
+- (void)deleteObject:(NSDictionary *)args
+{
+    NSLog(@"%@",[args objectForKey:@"id_element"]);
+    [ManagedElement deleteElementWithID:[args objectForKey:@"id_element"]];
+    [self finishedLoad];
 }
 
  // Override to support conditional editing of the table view.
